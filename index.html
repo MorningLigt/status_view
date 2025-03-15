@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+body {
+    background: #f0f5ff;
+    padding: 40px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.card-container {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    width: 250px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+        from 180deg,
+        rgba(255,255,255,0.3),
+        rgba(255,255,255,0.1),
+        transparent 60%
+    );
+    animation: rotate 4s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.card-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 8px;
+    display: inline-block;
+    position: relative;
+    z-index: 2;
+}
+
+.cost .card-title { background: linear-gradient(135deg, #4b6cb7 0%, #48b1bf 100%); }
+.income .card-title { background: linear-gradient(135deg, #2ebf91 0%, #8360c3 100%); }
+.fund .card-title { background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%); }
+.common .card-title { background: linear-gradient(135deg, #8a2be2 0%, #da70d6 100%); }
+
+.data-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
+    padding: 12px;
+    border-radius: 8px;
+    background: rgba(245,245,245,0.8);
+    position: relative;
+    z-index: 2;
+}
+
+.data-label {
+    color: #666;
+    font-size: 16px;
+}
+
+.data-value {
+    font-weight: bold;
+    font-size: 20px;
+    color: #333;
+}
+
+.progress-bar {
+    height: 10px;
+    background: #eee;
+    border-radius: 5px;
+    margin-top: 20px;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+}
+
+.progress {
+    height: 100%;
+    border-radius: 5px;
+    position: relative;
+}
+
+.progress::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg,
+        rgba(255,255,255,0.3) 0%,
+        rgba(255,255,255,0.6) 50%,
+        rgba(255,255,255,0.3) 100%
+    );
+    animation: shine 2s infinite;
+}
+
+@keyframes shine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* 配色方案 */
+.cost .progress { background: linear-gradient(90deg, #4b6cb7 0%, #48b1bf 100%); }
+.income .progress { background: linear-gradient(90deg, #2ebf91 0%, #8360c3 100%); }
+.fund .progress { background: linear-gradient(90deg, #ff7e5f 0%, #feb47b 100%); }
+.common .progress { background: linear-gradient(90deg, #8a2be2 0%, #da70d6 100%); }
+</style>
+</head>
+<body>
+
+<div class="card-container">
+    <!-- 成本口 -->
+    <div class="card cost">
+        <div class="card-title">成本口应用</div>
+        <div class="data-row">
+            <span class="data-label">总应用数</span>
+            <span class="data-value">15</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">常用数量</span>
+            <span class="data-value">13</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress" style="width: 86.67%"></div>
+        </div>
+    </div>
+
+    <!-- 收入口 -->
+    <div class="card income">
+        <div class="card-title">收入口应用</div>
+        <div class="data-row">
+            <span class="data-label">总应用数</span>
+            <span class="data-value">13</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">常用数量</span>
+            <span class="data-value">3</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress" style="width: 23.08%"></div>
+        </div>
+    </div>
+
+    <!-- 资金口 -->
+    <div class="card fund">
+        <div class="card-title">资金口应用</div>
+        <div class="data-row">
+            <span class="data-label">总应用数</span>
+            <span class="data-value">2</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">常用数量</span>
+            <span class="data-value">1</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress" style="width: 50%"></div>
+        </div>
+    </div>
+
+    <!-- 共同类 -->
+    <div class="card common">
+        <div class="card-title">共同类应用</div>
+        <div class="data-row">
+            <span class="data-label">总应用数</span>
+            <span class="data-value">17</span>
+        </div>
+        <div class="data-row">
+            <span class="data-label">常用数量</span>
+            <span class="data-value">12</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress" style="width: 70.59%"></div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
