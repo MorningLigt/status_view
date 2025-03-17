@@ -2,206 +2,312 @@
 <html>
 <head>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #f8fafd;
+  --card: #fff;
+  --text: #1a2332;
+  --subtle: #64748b;
+  --shadow: 0 6px 30px rgba(99,102,250,0.06);
+  
+  --cost: #6366fa;
+  --income: #10c8a0;
+  --fund: #f59e0b;
+  --common: #9d4cff;
+  --stat: #3b82f6;
+  --icon: linear-gradient(135deg, rgba(99,102,250,0.12), rgba(59,130,246,0.08));
+}
 
 body {
-    background: #f0f5ff;
-    padding: 40px;
-    font-family: 'Poppins', sans-serif;
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  padding: 2rem;
+  min-height: 100vh;
+  margin: 0;
 }
 
-.card-container {
-    display: flex;
-    gap: 25px;
-    flex-wrap: wrap;
-    justify-content: center;
+.dashboard {
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
+/* 卡片基础样式 */
 .card {
-    background: white;
-    border-radius: 15px;
-    padding: 25px;
-    width: 250px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
+  background: var(--card);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+  border: 1px solid rgba(99,102,250,0.05);
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(99,102,250,0.1);
 }
 
-.card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(
-        from 180deg,
-        rgba(255,255,255,0.3),
-        rgba(255,255,255,0.1),
-        transparent 60%
-    );
-    animation: rotate 4s linear infinite;
+/* 布局系统 */
+.grid {
+  display: grid;
+  gap: 1.5rem;
 }
 
-@keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+.app-grid {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin-bottom: 3rem;
 }
 
-.card-title {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: white;
-    padding: 8px 15px;
-    border-radius: 8px;
-    display: inline-block;
-    position: relative;
-    z-index: 2;
+.stats-grid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
-.cost .card-title { background: linear-gradient(135deg, #4b6cb7 0%, #48b1bf 100%); }
-.income .card-title { background: linear-gradient(135deg, #2ebf91 0%, #8360c3 100%); }
-.fund .card-title { background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%); }
-.common .card-title { background: linear-gradient(135deg, #8a2be2 0%, #da70d6 100%); }
+/* 应用卡片 */
+.app-card {
+  padding: 1.5rem;
+}
+
+.app-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  padding-left: 1rem;
+  border-left: 4px solid;
+  letter-spacing: -0.02em;
+}
 
 .data-row {
-    display: flex;
-    justify-content: space-between;
-    margin: 15px 0;
-    padding: 12px;
-    border-radius: 8px;
-    background: rgba(245,245,245,0.8);
-    position: relative;
-    z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  margin: 0.75rem 0;
+  border-radius: 10px;
+  transition: all 0.3s;
 }
 
-.data-label {
-    color: #666;
-    font-size: 16px;
+/* 数据突出显示 */
+.cost .data-row {
+  background: rgba(99,102,250,0.08);
+  color: var(--cost);
+}
+
+.income .data-row {
+  background: rgba(16,200,160,0.08);
+  color: var(--income);
+}
+
+.fund .data-row {
+  background: rgba(245,158,11,0.08);
+  color: var(--fund);
+}
+
+.common .data-row {
+  background: rgba(157,76,255,0.08);
+  color: var(--common);
+}
+
+.data-row:hover {
+  transform: translateX(8px);
+  background: rgba(var(--color-rgb), 0.15);
 }
 
 .data-value {
-    font-weight: bold;
-    font-size: 20px;
-    color: #333;
+  font-weight: 700;
+  font-size: 1.05rem;
 }
 
 .progress-bar {
-    height: 10px;
-    background: #eee;
-    border-radius: 5px;
-    margin-top: 20px;
-    overflow: hidden;
-    position: relative;
-    z-index: 2;
+  height: 10px;
+  background: #e8edff;
+  border-radius: 8px;
+  margin-top: 1.25rem;
+  overflow: hidden;
 }
 
 .progress {
-    height: 100%;
-    border-radius: 5px;
-    position: relative;
+  height: 100%;
+  border-radius: 8px;
+  transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
 }
 
-.progress::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(90deg,
-        rgba(255,255,255,0.3) 0%,
-        rgba(255,255,255,0.6) 50%,
-        rgba(255,255,255,0.3) 100%
-    );
-    animation: shine 2s infinite;
+/* 统计卡片 */
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.75rem;
 }
 
-@keyframes shine {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+.stat-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: var(--icon);
 }
 
-/* 配色方案 */
-.cost .progress { background: linear-gradient(90deg, #4b6cb7 0%, #48b1bf 100%); }
-.income .progress { background: linear-gradient(90deg, #2ebf91 0%, #8360c3 100%); }
-.fund .progress { background: linear-gradient(90deg, #ff7e5f 0%, #feb47b 100%); }
-.common .progress { background: linear-gradient(90deg, #8a2be2 0%, #da70d6 100%); }
+.stat-icon svg {
+  width: 28px;
+  height: 28px;
+  stroke: var(--stat);
+  stroke-width: 1.8;
+}
+
+.stat-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--stat);
+  letter-spacing: -0.03em;
+}
+
+.stat-label {
+  color: var(--subtle);
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+
+/* 类型修饰 */
+.cost { --color: var(--cost); }
+.income { --color: var(--income); }
+.fund { --color: var(--fund); }
+.common { --color: var(--common); }
+
+.cost .app-title { border-color: var(--color); }
+.cost .progress { background: var(--color); }
+
+.income .app-title { border-color: var(--color); }
+.income .progress { background: var(--color); }
+
+.fund .app-title { border-color: var(--color); }
+.fund .progress { background: var(--color); }
+
+.common .app-title { border-color: var(--color); }
+.common .progress { background: var(--color); }
+
+/* 响应式优化 */
+@media (max-width: 768px) {
+  .app-title { font-size: 1.1rem; }
+  .stat-value { font-size: 1.5rem; }
+}
 </style>
 </head>
 <body>
-
-<div class="card-container">
-    <!-- 成本口 -->
-    <div class="card cost">
-        <div class="card-title">成本口应用</div>
-        <div class="data-row">
-            <span class="data-label">总应用数</span>
-            <span class="data-value">150</span>
-        </div>
-        <div class="data-row">
-            <span class="data-label">常用数量</span>
-            <span class="data-value">130</span>
-        </div>
-        <div class="progress-bar">
-            <div class="progress" style="width: 86.67%"></div>
-        </div>
+<div class="dashboard">
+  <!-- 应用分类 -->
+  <div class="app-grid grid">
+    <div class="app-card card cost">
+      <div class="app-title">成本口应用</div>
+      <div class="data-row">
+        <span class="data-label">总应用数</span>
+        <span class="data-value">15</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">常用数量</span>
+        <span class="data-value">13</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress" style="width: 86.67%"></div>
+      </div>
     </div>
 
-    <!-- 收入口 -->
-    <div class="card income">
-        <div class="card-title">收入口应用</div>
-        <div class="data-row">
-            <span class="data-label">总应用数</span>
-            <span class="data-value">130</span>
-        </div>
-        <div class="data-row">
-            <span class="data-label">常用数量</span>
-            <span class="data-value">30</span>
-        </div>
-        <div class="progress-bar">
-            <div class="progress" style="width: 23.08%"></div>
-        </div>
+    <div class="app-card card income">
+      <div class="app-title">收入口应用</div>
+      <div class="data-row">
+        <span class="data-label">总应用数</span>
+        <span class="data-value">13</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">常用数量</span>
+        <span class="data-value">3</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress" style="width: 23.08%"></div>
+      </div>
     </div>
 
-    <!-- 资金口 -->
-    <div class="card fund">
-        <div class="card-title">资金口应用</div>
-        <div class="data-row">
-            <span class="data-label">总应用数</span>
-            <span class="data-value">20</span>
-        </div>
-        <div class="data-row">
-            <span class="data-label">常用数量</span>
-            <span class="data-value">10</span>
-        </div>
-        <div class="progress-bar">
-            <div class="progress" style="width: 50%"></div>
-        </div>
+    <div class="app-card card fund">
+      <div class="app-title">资金口应用</div>
+      <div class="data-row">
+        <span class="data-label">总应用数</span>
+        <span class="data-value">2</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">常用数量</span>
+        <span class="data-value">1</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress" style="width: 50%"></div>
+      </div>
     </div>
 
-    <!-- 共同类 -->
-    <div class="card common">
-        <div class="card-title">共同类应用</div>
-        <div class="data-row">
-            <span class="data-label">总应用数</span>
-            <span class="data-value">170</span>
-        </div>
-        <div class="data-row">
-            <span class="data-label">常用数量</span>
-            <span class="data-value">120</span>
-        </div>
-        <div class="progress-bar">
-            <div class="progress" style="width: 70.59%"></div>
-        </div>
+    <div class="app-card card common">
+      <div class="app-title">共同类应用</div>
+      <div class="data-row">
+        <span class="data-label">总应用数</span>
+        <span class="data-value">17</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">常用数量</span>
+        <span class="data-value">12</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress" style="width: 70.59%"></div>
+      </div>
     </div>
+  </div>
+
+  <!-- 统计数据 -->
+  <div class="stats-grid grid">
+    <div class="stat-card card">
+      <div class="stat-icon">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M12 6v6l4 2m6-2c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10z"/>
+        </svg>
+      </div>
+      <div class="stat-content">
+        <div class="stat-value">300+</div>
+        <div class="stat-label">运行天数</div>
+      </div>
+    </div>
+
+    <div class="stat-card card">
+      <div class="stat-icon">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2m20 0c0 5.523-4.477 10-10 10S2 17.523 2 12s4.477-10 10-10 10 4.477 10 10z"/>
+        </svg>
+      </div>
+      <div class="stat-content">
+        <div class="stat-value">3000+</div>
+        <div class="stat-label">运行时长（小时）</div>
+      </div>
+    </div>
+
+    <div class="stat-card card">
+      <div class="stat-icon">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M12 2v20M2 12h20m-10 6a6 6 0 100-12 6 6 0 000 12z"/>
+        </svg>
+      </div>
+      <div class="stat-content">
+        <div class="stat-value">40+</div>
+        <div class="stat-label">累计开发应用</div>
+      </div>
+    </div>
+
+    <div class="stat-card card">
+      <div class="stat-icon">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M13 2v4l-2 1-2-1V2h4zM7 14l2 1 2-1-2-5-2 5zm10 0l-2 1-2-1 2-5 2 5zm3-7l-3 3m0 0l-3-3m3 3v10"/>
+        </svg>
+      </div>
+      <div class="stat-content">
+        <div class="stat-value">20+</div>
+        <div class="stat-label">高频使用应用</div>
+      </div>
+    </div>
+  </div>
 </div>
-
 </body>
 </html>
